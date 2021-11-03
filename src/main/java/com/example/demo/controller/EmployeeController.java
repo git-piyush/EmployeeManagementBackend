@@ -1,6 +1,5 @@
 package com.example.demo.controller;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -18,13 +17,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.demo.exception.ResourceNotFoundException;
 import com.example.demo.model.Employee;
-import com.example.demo.repository.EmployeeRepository;
-import com.example.demo.service.EmployeeService;
-import com.example.demo.service.SequenceGenerator;
 
-@CrossOrigin(origins = "http://localhost:4200")
+import com.example.demo.service.EmployeeService;
+
+//@CrossOrigin(origins = "http://localhost:4200")
+
+@CrossOrigin(origins = "https://employee-management-frontend.herokuapp.com/")
 @RestController
 @RequestMapping("/api/v1/")
 public class EmployeeController {

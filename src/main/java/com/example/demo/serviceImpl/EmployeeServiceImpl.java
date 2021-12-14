@@ -73,4 +73,9 @@ public class EmployeeServiceImpl implements EmployeeService {
 
 	}
 
+	@Override
+	public List<Employee> getEmployeeByLastName(String lastName) {
+		return employeeRepository.getEmployeeByLastName(lastName);
+	}
+
 }

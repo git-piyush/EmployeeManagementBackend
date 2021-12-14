@@ -21,5 +21,7 @@ public interface EmployeeService {
 	public ResponseEntity<Employee> updateEmployee(Long id, Employee employeeDetails);
 	
 	public ResponseEntity<Map<String, Boolean>> deleteEmployee(Long id);
+	
+	public List<Employee> getEmployeeByLastName(String lastName);
 
 }

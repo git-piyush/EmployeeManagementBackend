@@ -22,7 +22,6 @@ import com.example.demo.model.Employee;
 import com.example.demo.service.EmployeeService;
 
 //@CrossOrigin(origins = "http://localhost:4200")
-
 @CrossOrigin(origins = "https://em-frontend.herokuapp.com/")
 @RestController
 @RequestMapping("/api/v1/")
@@ -34,6 +33,12 @@ public class EmployeeController {
 	@GetMapping("/employees")
 	public List<Employee> getAllEmployees() {
 		return employeeService.getAllEmployees();
+	}
+	
+	@GetMapping("/employees/bytype/{lastName}")
+	public List<Employee> getEmployeeByLastName(@Valid @PathVariable String lastName) {
+		System.out.println(lastName);
+		return employeeService.getEmployeeByLastName(lastName);
 	}
 
 	@PostMapping("/employees")

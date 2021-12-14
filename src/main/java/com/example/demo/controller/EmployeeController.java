@@ -21,8 +21,8 @@ import com.example.demo.model.Employee;
 
 import com.example.demo.service.EmployeeService;
 
-@CrossOrigin(origins = "http://localhost:4200")
-//@CrossOrigin(origins = "https://em-frontend.herokuapp.com/")
+//@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "https://em-frontend.herokuapp.com/")
 @RestController
 @RequestMapping("/api/v1/")
 public class EmployeeController {

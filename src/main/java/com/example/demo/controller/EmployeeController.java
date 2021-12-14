@@ -21,8 +21,8 @@ import com.example.demo.model.Employee;
 
 import com.example.demo.service.EmployeeService;
 
-//@CrossOrigin(origins = "http://localhost:4200")
-@CrossOrigin(origins = "https://em-frontend.herokuapp.com/")
+@CrossOrigin(origins = "http://localhost:4200")
+//@CrossOrigin(origins = "https://em-frontend.herokuapp.com/")
 @RestController
 @RequestMapping("/api/v1/")
 public class EmployeeController {
@@ -30,29 +30,29 @@ public class EmployeeController {
 	@Autowired
 	EmployeeService employeeService;
 
-	@GetMapping("/employees")
+	@GetMapping("/piyush")
 	public List<Employee> getAllEmployees() {
 		return employeeService.getAllEmployees();
 	}
 	
-	@GetMapping("/employees/bytype/{lastName}")
+	@GetMapping("/piyush/bytype/{lastName}")
 	public List<Employee> getEmployeeByLastName(@Valid @PathVariable String lastName) {
 		System.out.println(lastName);
 		return employeeService.getEmployeeByLastName(lastName);
 	}
 
-	@PostMapping("/employees")
+	@PostMapping("/piyush")
 	public Employee createEmployee(@Valid @RequestBody Employee employee) {
 
 		return employeeService.createEmployee(employee);
 	}
 
-	@GetMapping("/employees/{id}")
+	@GetMapping("/piyush/{id}")
 	public ResponseEntity<Employee> getEmployeeById(@PathVariable Long id) {
 		return employeeService.getEmployeeById(id);
 	}
 
-	@PutMapping("/employees/{id}")
+	@PutMapping("/piyush/{id}")
 	public ResponseEntity<Employee> updateEmployee(@PathVariable Long id, @RequestBody Employee employeeDetails) {
 		System.out.println(id);
 		System.out.println(employeeDetails);
@@ -60,7 +60,7 @@ public class EmployeeController {
 	}
 
 	// delete employee rest api
-	@DeleteMapping("/employees/{id}")
+	@DeleteMapping("/piyush/{id}")
 	public ResponseEntity<Map<String, Boolean>> deleteEmployee(@PathVariable Long id) {
 		return employeeService.deleteEmployee(id);
 	}

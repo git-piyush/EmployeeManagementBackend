@@ -24,4 +24,8 @@ public interface EmployeeService {
 	
 	public List<Employee> getEmployeeByLastName(String lastName);
 
+	public Employee getNextQuestionById(Long id);
+
+	public Employee getPreviousQuestionById(Long id);
+
 }

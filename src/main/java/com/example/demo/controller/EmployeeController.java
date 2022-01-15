@@ -51,6 +51,18 @@ public class EmployeeController {
 	public ResponseEntity<Employee> getEmployeeById(@PathVariable Long id) {
 		return employeeService.getEmployeeById(id);
 	}
+	
+	@GetMapping("/piyush/next/{id}")
+	public Employee getNextQuestionById(@PathVariable Long id){
+		System.out.println(id);
+		return employeeService.getNextQuestionById(id);
+	}
+	
+	@GetMapping("/piyush/previous/{id}")
+	public Employee getPreviousQuestionById(@PathVariable Long id){
+		System.out.println(id);
+		return employeeService.getPreviousQuestionById(id);
+	}
 
 	@PutMapping("/piyush/{id}")
 	public ResponseEntity<Employee> updateEmployee(@PathVariable Long id, @RequestBody Employee employeeDetails) {

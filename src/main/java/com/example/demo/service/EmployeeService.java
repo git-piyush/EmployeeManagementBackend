@@ -28,4 +28,8 @@ public interface EmployeeService {
 
 	public Employee getPreviousQuestionById(Long id);
 
+	public Employee getNextQuestionByIdAndType(String type, Long id);
+
+	public Employee getPreviousQuestionByIdAndType(String type, Long id);
+
 }

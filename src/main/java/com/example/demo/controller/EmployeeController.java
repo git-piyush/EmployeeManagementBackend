@@ -54,14 +54,25 @@ public class EmployeeController {
 	
 	@GetMapping("/piyush/next/{id}")
 	public Employee getNextQuestionById(@PathVariable Long id){
-		System.out.println(id);
+		//System.out.println(id);
 		return employeeService.getNextQuestionById(id);
+	}
+	
+	@GetMapping("/piyush/next/{type}/{id}")
+	public Employee getNextQuestionByIdAndType(@PathVariable String type, @PathVariable Long id){
+		return employeeService.getNextQuestionByIdAndType(type,id);
 	}
 	
 	@GetMapping("/piyush/previous/{id}")
 	public Employee getPreviousQuestionById(@PathVariable Long id){
-		System.out.println(id);
+		//System.out.println(id);
 		return employeeService.getPreviousQuestionById(id);
+	}
+	
+	@GetMapping("/piyush/previous/{type}/{id}")
+	public Employee getPreviousQuestionByIdAndType( @PathVariable String type ,@PathVariable Long id){
+		//System.out.println(id);
+		return employeeService.getPreviousQuestionByIdAndType(type, id);
 	}
 
 	@PutMapping("/piyush/{id}")

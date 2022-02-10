@@ -20,4 +20,10 @@ public interface EmployeeRepository extends MongoRepository<Employee, Long> {
 	@Query("{'_id':{$lt:?0} }")
 	List<Employee> getPreviousQuestionById(Long Id);
 	
+	@Query("{$and:[{'lastName':?0},{'_id':{$gt:?1}}]}")
+	List<Employee> getNextQuestionByIdAndType(String lastName, Long Id);
+
+	@Query("{$and:[{'lastName':?0},{'_id':{$lt:?1}}]}")
+	List<Employee> getPreviousQuestionByIdAndType(String lastName, Long id);
+	
 }

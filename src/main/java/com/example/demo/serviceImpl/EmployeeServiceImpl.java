@@ -107,4 +107,36 @@ public class EmployeeServiceImpl implements EmployeeService {
 		return employeeRepository.getEmployeeByLastName(lastName);
 	}
 
+	@Override
+	public Employee getNextQuestionByIdAndType(String type, Long id) {
+		System.out.println(type);
+		System.out.println(id);
+		List<Employee> employess = employeeRepository.getNextQuestionByIdAndType(type,id);
+		
+		System.out.println(employess.size());
+		Employee employee = null;
+		if (employess.isEmpty()) {
+			employee = employeeRepository.findById(id)
+					.orElseThrow(() -> new ResourceNotFoundException("Employee not exist with id :" + id));
+		} else {
+			employee = employess.get(0);
+		}
+
+		return employee;
+	}
+
+	@Override
+	public Employee getPreviousQuestionByIdAndType(String type, Long id) {
+		List<Employee> employess = employeeRepository.getPreviousQuestionByIdAndType(type, id);
+		Employee employee = null;
+		if (employess.isEmpty()) {
+			employee = employeeRepository.findById(id)
+					.orElseThrow(() -> new ResourceNotFoundException("Employee not exist with id :" + id));
+		} else {
+			employee = employess.get(employess.size()-1);
+		}
+
+		return employee;
+	}
+
 }

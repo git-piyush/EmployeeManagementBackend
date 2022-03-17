@@ -30,7 +30,7 @@ public class EmployeeController {
 	EmployeeService employeeService;
 	
 	@PostMapping("/piyush/{id1}/{id2}")
-	public List<Employee> swapQuestions(@PathVariable Long id1, @PathVariable Long id2) {
+	public List<Employee> swapQuestions(@PathVariable Long id1, @PathVariable Long id2, @RequestBody Employee employee) {
 		System.out.println(id1+" "+id2);
 		employeeService.swapQuestions(id1, id2);
 		List<Employee> emps = employeeService.getAllEmployees();

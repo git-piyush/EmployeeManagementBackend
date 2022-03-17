@@ -29,7 +29,7 @@ public class EmployeeController {
 	@Autowired
 	EmployeeService employeeService;
 	
-	@GetMapping("/piyush/{id1}/{id2}")
+	@PostMapping("/piyush/{id1}/{id2}")
 	public List<Employee> swapQuestions(@PathVariable Long id1, @PathVariable Long id2) {
 		System.out.println(id1+" "+id2);
 		employeeService.swapQuestions(id1, id2);

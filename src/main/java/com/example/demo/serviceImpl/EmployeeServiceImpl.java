@@ -104,6 +104,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
 	@Override
 	public List<Employee> getEmployeeByLastName(String lastName) {
+		System.out.println("Hello world!!");
 		return employeeRepository.getEmployeeByLastName(lastName);
 	}
 
@@ -137,6 +138,32 @@ public class EmployeeServiceImpl implements EmployeeService {
 		}
 
 		return employee;
+	}
+
+	@Override
+	public void swapQuestions(Long id1, Long id2) {
+		
+		Employee employee1 = employeeRepository.findById(id1)
+				.orElseThrow(() -> new ResourceNotFoundException("Employee not exist with id :" + id1));
+		
+		Employee employee2 = employeeRepository.findById(id2)
+				.orElseThrow(() -> new ResourceNotFoundException("Employee not exist with id :" + id2));
+		
+		System.out.println(employee1);
+		System.out.println(employee2);
+		
+		Long empId1 = employee1.getId();
+		
+		employee1.setId(employee2.getId());
+		employee2.setId(empId1);
+		
+		System.out.println(employee1);
+		System.out.println(employee2);
+		
+		employeeRepository.save(employee1);
+		employeeRepository.save(employee2);
+
+		
 	}
 
 }

@@ -32,4 +32,6 @@ public interface EmployeeService {
 
 	public Employee getPreviousQuestionByIdAndType(String type, Long id);
 
+	public void swapQuestions(Long id1, Long id2);
+
 }

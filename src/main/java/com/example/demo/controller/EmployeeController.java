@@ -30,6 +30,13 @@ public class EmployeeController {
 	@Autowired
 	EmployeeService employeeService;
 
+	@PostMapping("/{id1}/piyush/{id2}")
+	public String swapQuestions(@PathVariable Long id1, @PathVariable Long id2) {		
+		System.out.println(id1+" "+id2);
+		employeeService.swapQuestions(id1, id2);
+		return "Questions Swapped Sucessfully";
+	}
+	
 	@GetMapping("/piyush")
 	public List<Employee> getAllEmployees() {
 		return employeeService.getAllEmployees();

@@ -6,7 +6,7 @@ import java.util.Map;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-
+import com.example.demo.dto.AllEmployeeResponseDto;
 import com.example.demo.model.Employee;
 
 @Service
@@ -33,5 +33,7 @@ public interface EmployeeService {
 	public Employee getPreviousQuestionByIdAndType(String type, Long id);
 
 	public void swapQuestions(Long id1, Long id2);
+
+	public AllEmployeeResponseDto getAllEmployeesPagination(int pageSize, int pageNo, String sortBy, String sortDir);
 
 }

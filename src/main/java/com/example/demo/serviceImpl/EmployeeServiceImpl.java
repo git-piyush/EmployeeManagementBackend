@@ -5,9 +5,14 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import com.example.demo.dto.AllEmployeeResponseDto;
 import com.example.demo.exception.ResourceNotFoundException;
 import com.example.demo.model.Employee;
 import com.example.demo.repository.EmployeeRepository;
@@ -164,6 +169,28 @@ public class EmployeeServiceImpl implements EmployeeService {
 		employeeRepository.save(employee2);
 
 		
+	}
+
+	@Override
+	public AllEmployeeResponseDto getAllEmployeesPagination(int pageSize, int pageNo, String sortBy, String sortDir) {
+		Sort sort = sortDir.equalsIgnoreCase(Sort.Direction.ASC.toString()) ? Sort.by(sortBy).ascending()
+				: Sort.by(sortBy).descending();
+
+		Pageable page = PageRequest.of(pageNo, pageSize, sort);
+		Page<Employee> employess = employeeRepository.findAll(page);
+		
+		List<Employee> employeeList = employess.getContent();
+		
+		AllEmployeeResponseDto allEmployeeResponseDto = new AllEmployeeResponseDto();
+		
+		allEmployeeResponseDto.setData(employeeList);
+		allEmployeeResponseDto.setPageNo(employess.getNumber());
+		allEmployeeResponseDto.setPageSize(employess.getSize());
+		allEmployeeResponseDto.setTotalPages(employess.getTotalPages());
+		allEmployeeResponseDto.setTotalElement(employess.getTotalElements());
+		allEmployeeResponseDto.setLast(employess.isLast());
+		
+		return allEmployeeResponseDto;
 	}
 
 }

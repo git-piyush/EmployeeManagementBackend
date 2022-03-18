@@ -15,10 +15,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.demo.dto.AllEmployeeResponseDto;
 import com.example.demo.model.Employee;
 import com.example.demo.service.EmployeeService;
+import com.example.demo.util.AppConstants;
 
 //@CrossOrigin(origins = "http://localhost:4200")
 @CrossOrigin(origins = "https://em-frontend.herokuapp.com/")
@@ -29,17 +32,28 @@ public class EmployeeController {
 	@Autowired
 	EmployeeService employeeService;
 	
-	@GetMapping("/piyush/{id1}/{id2}")
-	public List<Employee> swapQuestions(@PathVariable Long id1, @PathVariable Long id2) {
+	@PostMapping("/piyush/{id1}/{id2}")
+	public List<Employee> swapQuestions(@PathVariable Long id1, @PathVariable Long id2, @RequestBody Employee employee ) {
 		System.out.println(id1+" "+id2);
 		employeeService.swapQuestions(id1, id2);
 		List<Employee> emps = employeeService.getAllEmployees();
 		return emps;
 	}
-	
+	/*
 	@GetMapping("/piyush")
 	public List<Employee> getAllEmployees() {
 		return employeeService.getAllEmployees();
+	}*/
+	
+	@GetMapping("/piyush/employee")
+	public AllEmployeeResponseDto getAllEmployeesPagination(
+			@RequestParam(value = "pageSize", defaultValue = AppConstants.DEFAULT_PAGE_SIZE, required = false) int pageSize,
+			@RequestParam(value = "pageNo", defaultValue = AppConstants.DEFAULT_PAGE_NO, required = false) int pageNo,
+			@RequestParam(value = "sortBy", defaultValue = AppConstants.DEFAULT_SORT_BY, required = false) String sortBy,
+			@RequestParam(value = "sortDir", defaultValue = AppConstants.DEFAULT_SORT_DIRECTION, required = false) String sortDir) {
+		System.out.println("getAllEmployeesPagination");
+		pageNo = pageNo - 1;
+		return employeeService.getAllEmployeesPagination(pageSize, pageNo, sortBy, sortDir);
 	}
 	
 	@GetMapping("/piyush/bytype/{lastName}")

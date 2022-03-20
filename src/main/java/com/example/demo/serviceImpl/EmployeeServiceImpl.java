@@ -11,9 +11,12 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.example.demo.dto.AllEmployeeResponseDto;
 import com.example.demo.exception.ResourceNotFoundException;
+import com.example.demo.model.Attachment;
 import com.example.demo.model.Employee;
 import com.example.demo.repository.EmployeeRepository;
 import com.example.demo.service.EmployeeService;
@@ -191,6 +194,43 @@ public class EmployeeServiceImpl implements EmployeeService {
 		allEmployeeResponseDto.setLast(employess.isLast());
 		
 		return allEmployeeResponseDto;
+	}
+
+	@Override
+	public Employee saveAttachment(MultipartFile file, Long id) throws Exception {
+		
+		String fileName = StringUtils.cleanPath(file.getOriginalFilename());
+		
+		Employee employee = employeeRepository.findById(id)
+				.orElseThrow(() -> new ResourceNotFoundException("Employee not exist with id :" + id));
+		
+		try {
+            if(fileName.contains("..")) {
+                throw  new Exception("Filename contains invalid path sequence "
+                + fileName);
+            }
+
+            Attachment attachment
+                    = new Attachment(fileName,
+                    file.getContentType(),
+                    file.getBytes());
+            
+            employee.setAttachment(attachment);
+            
+            return employeeRepository.save(employee);
+
+       } catch (Exception e) {
+            throw new Exception("Could not save File: " + fileName);
+       }
+
+	}
+
+	@Override
+	public Employee getAttachment(Long empId) throws Exception {
+		return employeeRepository
+                .findById(empId)
+                .orElseThrow(
+                        () -> new Exception("File not found with Id: " + empId));
 	}
 
 }

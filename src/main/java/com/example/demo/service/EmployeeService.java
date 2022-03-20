@@ -5,8 +5,10 @@ import java.util.Map;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.example.demo.dto.AllEmployeeResponseDto;
+import com.example.demo.model.Attachment;
 import com.example.demo.model.Employee;
 
 @Service
@@ -36,4 +38,9 @@ public interface EmployeeService {
 
 	public AllEmployeeResponseDto getAllEmployeesPagination(int pageSize, int pageNo, String sortBy, String sortDir);
 
+	public Employee saveAttachment(MultipartFile file, Long id) throws Exception;
+
+	public Employee getAttachment(Long fileId) throws Exception;
+
+	
 }

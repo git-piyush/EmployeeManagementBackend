@@ -6,7 +6,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection = "employee")
 public class Employee {
-	
+
 	@Transient
 	public static final String SEQUENCE_NAME = "employee_sequence";
 
@@ -19,17 +19,20 @@ public class Employee {
 
 	private String emailId;
 
+	private Attachment attachment;
+
 	public Employee() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public Employee(long id, String firstName, String lastName, String emailId) {
+	public Employee(long id, String firstName, String lastName, String emailId, Attachment attachment) {
 		super();
 		this.id = id;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.emailId = emailId;
+		this.attachment = attachment;
 	}
 
 	public long getId() {
@@ -64,10 +67,12 @@ public class Employee {
 		this.emailId = emailId;
 	}
 
-	@Override
-	public String toString() {
-		return "Employee [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", emailId=" + emailId
-				+ "]";
+	public Attachment getAttachment() {
+		return attachment;
+	}
+
+	public void setAttachment(Attachment attachment) {
+		this.attachment = attachment;
 	}
 
 }

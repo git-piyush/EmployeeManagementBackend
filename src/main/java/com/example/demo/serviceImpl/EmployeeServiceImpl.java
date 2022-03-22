@@ -1,5 +1,7 @@
 package com.example.demo.serviceImpl;
 
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -30,6 +32,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
 	@Autowired
 	private SequenceGenerator sequenceGenerator;
+	
 
 	@Override
 	public List<Employee> getAllEmployees() {
@@ -76,7 +79,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 			employee = employeeRepository.findById(id)
 					.orElseThrow(() -> new ResourceNotFoundException("Employee not exist with id :" + id));
 		} else {
-			employee = employess.get(employess.size()-1);
+			employee = employess.get(employess.size() - 1);
 		}
 
 		return employee;
@@ -120,8 +123,8 @@ public class EmployeeServiceImpl implements EmployeeService {
 	public Employee getNextQuestionByIdAndType(String type, Long id) {
 		System.out.println(type);
 		System.out.println(id);
-		List<Employee> employess = employeeRepository.getNextQuestionByIdAndType(type,id);
-		
+		List<Employee> employess = employeeRepository.getNextQuestionByIdAndType(type, id);
+
 		System.out.println(employess.size());
 		Employee employee = null;
 		if (employess.isEmpty()) {
@@ -142,7 +145,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 			employee = employeeRepository.findById(id)
 					.orElseThrow(() -> new ResourceNotFoundException("Employee not exist with id :" + id));
 		} else {
-			employee = employess.get(employess.size()-1);
+			employee = employess.get(employess.size() - 1);
 		}
 
 		return employee;
@@ -150,28 +153,27 @@ public class EmployeeServiceImpl implements EmployeeService {
 
 	@Override
 	public void swapQuestions(Long id1, Long id2) {
-		
+
 		Employee employee1 = employeeRepository.findById(id1)
 				.orElseThrow(() -> new ResourceNotFoundException("Employee not exist with id :" + id1));
-		
+
 		Employee employee2 = employeeRepository.findById(id2)
 				.orElseThrow(() -> new ResourceNotFoundException("Employee not exist with id :" + id2));
-		
+
 		System.out.println(employee1);
 		System.out.println(employee2);
-		
+
 		Long empId1 = employee1.getId();
-		
+
 		employee1.setId(employee2.getId());
 		employee2.setId(empId1);
-		
+
 		System.out.println(employee1);
 		System.out.println(employee2);
-		
+
 		employeeRepository.save(employee1);
 		employeeRepository.save(employee2);
 
-		
 	}
 
 	@Override
@@ -181,56 +183,49 @@ public class EmployeeServiceImpl implements EmployeeService {
 
 		Pageable page = PageRequest.of(pageNo, pageSize, sort);
 		Page<Employee> employess = employeeRepository.findAll(page);
-		
+
 		List<Employee> employeeList = employess.getContent();
-		
+
 		AllEmployeeResponseDto allEmployeeResponseDto = new AllEmployeeResponseDto();
-		
+
 		allEmployeeResponseDto.setData(employeeList);
 		allEmployeeResponseDto.setPageNo(employess.getNumber());
 		allEmployeeResponseDto.setPageSize(employess.getSize());
 		allEmployeeResponseDto.setTotalPages(employess.getTotalPages());
 		allEmployeeResponseDto.setTotalElement(employess.getTotalElements());
 		allEmployeeResponseDto.setLast(employess.isLast());
-		
+
 		return allEmployeeResponseDto;
 	}
 
 	@Override
 	public Employee saveAttachment(MultipartFile file, Long id) throws Exception {
-		
+
 		String fileName = StringUtils.cleanPath(file.getOriginalFilename());
-		
+
 		Employee employee = employeeRepository.findById(id)
 				.orElseThrow(() -> new ResourceNotFoundException("Employee not exist with id :" + id));
-		
+
 		try {
-            if(fileName.contains("..")) {
-                throw  new Exception("Filename contains invalid path sequence "
-                + fileName);
-            }
+			if (fileName.contains("..")) {
+				throw new Exception("Filename contains invalid path sequence " + fileName);
+			}
 
-            Attachment attachment
-                    = new Attachment(fileName,
-                    file.getContentType(),
-                    file.getBytes());
-            
-            employee.setAttachment(attachment);
-            
-            return employeeRepository.save(employee);
+			Attachment attachment = new Attachment(fileName, file.getContentType(), file.getBytes());
 
-       } catch (Exception e) {
-            throw new Exception("Could not save File: " + fileName);
-       }
+			employee.setAttachment(attachment);
+
+			return employeeRepository.save(employee);
+
+		} catch (Exception e) {
+			throw new Exception("Could not save File: " + fileName);
+		}
 
 	}
 
 	@Override
 	public Employee getAttachment(Long empId) throws Exception {
-		return employeeRepository
-                .findById(empId)
-                .orElseThrow(
-                        () -> new Exception("File not found with Id: " + empId));
+		return employeeRepository.findById(empId).orElseThrow(() -> new Exception("File not found with Id: " + empId));
 	}
 
 }

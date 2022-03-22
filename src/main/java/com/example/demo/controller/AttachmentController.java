@@ -1,9 +1,13 @@
 package com.example.demo.controller;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -44,13 +48,14 @@ public class AttachmentController {
 	}
 
 	@GetMapping("/piyush/download/{empId}")
-	public ResponseEntity<Resource> downloadFile(@PathVariable Long empId) throws Exception {
+	public byte[] downloadFile(@PathVariable Long empId) throws Exception {
+		System.out.println("hello world");
 		Employee employee = null;
 		employee = employeeService.getAttachment(empId);
-
-		return ResponseEntity.ok().contentType(MediaType.parseMediaType(employee.getAttachment().getFileType()))
-				.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + employee.getAttachment().getFileName() + "\"")
-				.body(new ByteArrayResource(employee.getAttachment().getData()));
+		return employee.getAttachment().getData();
+//		return ResponseEntity.ok().contentType(MediaType.parseMediaType(employee.getAttachment().getFileType()))
+//				.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + employee.getAttachment().getFileName() + "\"")
+//				.body(new ByteArrayResource(employee.getAttachment().getData()));
 
 	}
 
